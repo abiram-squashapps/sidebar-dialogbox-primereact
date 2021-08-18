@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -27,12 +28,16 @@
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tableContainerSmall {
+  width: 78%;
+  float: right;
+  margin-right: 0.5%;
+  margin-top: 1%;
+}
+.tableContainerFull {
+  width: 98%;
+  margin: 1%;
+}
+.sidebarContainer {
+  width: 20%;
 }

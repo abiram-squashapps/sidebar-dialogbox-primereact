@@ -37,6 +37,7 @@ code {
   padding: 10px 20px;
   background-color: #ffffff;
   display: flex;
+  box-shadow: 0 1px 5px rgba(11, 0, 1, 0.2);
 }
 .p-button-text {
   flex: none;
@@ -93,4 +94,15 @@ code {
 }
 th input {
   width: 100%;
+}
+.imginput {
+  height: 170px;
+  margin-top: 10px;
+  border: 1px dashed gray;
+}
+.imginput > input {
+  display: none;
+}
+.btn {
+  width: 84px;
 }

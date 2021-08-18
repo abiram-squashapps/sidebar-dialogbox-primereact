@@ -26,7 +26,7 @@ function TablePrimeReact({ toggleDialog }) {
         width="40px"
         style={{ borderRadius: "50%" }}
       />
-      <span className="p-col-10">{rowData.name}</span>
+      <span className="col-10">{rowData.name}</span>
     </div>
   );
 
@@ -41,7 +41,7 @@ function TablePrimeReact({ toggleDialog }) {
         showGridlines
         stripedRows
         paginator
-        rows={5}
+        rows={6}
         removableSort
       >
         <Column field="name" header="name" sortable></Column>
@@ -50,7 +50,6 @@ function TablePrimeReact({ toggleDialog }) {
           field="country.name"
           className="columns"
           header="country"
-          filter
         ></Column>
         <Column field="date" header="date" sortable></Column>
         <Column

@@ -31,10 +31,10 @@ function SidebarPrime({ sidebar, toggleSideBar }) {
             iconPos="left"
             className="mb-4 block flex justify-content-start"
           />
-          <Button className="amazon p-p-0 flex justify-content-center ">
-            <i className="pi pi-amazon p-px-2"></i>
+          <Button className="amazon p-p-0 flex justify-content-start ">
+            <i className="pi pi-amazon p-px-2 mr-7"></i>
             {"  "}
-            <span>Amazon</span>
+            <span className="ml-4">Amazon</span>
           </Button>
         </div>
       </Sidebar>

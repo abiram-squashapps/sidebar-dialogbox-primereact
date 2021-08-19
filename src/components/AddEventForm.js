@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { InputText } from "primereact/inputtext";
+
 //import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import placeholder from "../assets/images/petersmith.png";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
+import TextField from "../commonComponents/TextField";
 
 function AddEventForm({ toggleDialog }) {
   const [formData, setFormData] = useState({
@@ -13,12 +14,27 @@ function AddEventForm({ toggleDialog }) {
     hallName: "",
     description: "",
   });
-  const [date, endDate] = useState(["", ""]);
+  const [imgUrl, setImgUrl] = useState("");
+  const [date, setDate] = useState(["", ""]);
+
   const handleDateRange = (date) => {
     console.log(`start date ${date.value[0]}`);
     console.log(`end date ${date.value[1]}`);
+    setDate([...date.target.value]);
   };
 
+  const handleImageInput = (e) => {
+    console.log(e.target.files[0]);
+    if (e.target.files.length) {
+      setImgUrl(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+  const removeImg = () => {
+    if (imgUrl) {
+      setImgUrl("");
+    }
+  };
+  // for form data
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,34 +44,44 @@ function AddEventForm({ toggleDialog }) {
     }));
   };
 
+  const handleSubmit = () => {
+    let payLoad = {
+      id: "e1",
+      eventName: formData.eventName,
+      eventImage: imgUrl,
+      fromDate: date[0],
+      toDate: date[1],
+      timing: formData.timing,
+      venue: {
+        hallName: formData.hallName,
+        venue: formData.venue,
+      },
+    };
+  };
+
   return (
     <div className="p-fluid p-formgrid grid ">
       <div className="p-field col-12 imginput flex align-items-center justify-content-center">
         <label
           htmlFor="address"
+          onClick={removeImg}
           className="flex flex-column justify-content-center align-items-center "
         >
           {" "}
-          <img
-            src={placeholder}
-            alt="placeholder"
-            width="50px"
-            style={{ borderRadius: "50%" }}
-          />
-          <p>add cover picture</p>
+          <div className={imgUrl ? "fullImage" : "smallRoundedImg"}>
+            <img src={imgUrl ? imgUrl : placeholder} alt="placeholder" />
+          </div>
+          {!imgUrl && <p>add cover picture</p>}
         </label>
-        <input id="address" type="file" />
+        <input id="address" type="file" onChange={handleImageInput} />
       </div>
-      <div className="p-field col-12 md:col-6">
-        <label htmlFor="eventName">Event Name</label>
-        <InputText
-          id="eventName"
-          name="eventName"
-          type="text"
-          value={formData.eventName}
-          onChange={handleChange}
-        />
-      </div>
+
+      <TextField
+        name="eventName"
+        value={formData.eventName}
+        handleChange={handleChange}
+        label="Event Name"
+      />
 
       <div className="p-field  col-12 md:col-6">
         <label htmlFor="dateRange">Date Range</label>
@@ -67,19 +93,14 @@ function AddEventForm({ toggleDialog }) {
         />
       </div>
 
-      <div className="p-field col-12 md:col-6">
-        <label htmlFor="timing" onChange={handleChange}>
-          Timing
-        </label>
-        <InputText
-          id="timing"
-          name="timing"
-          value={formData.timing}
-          onChange={handleChange}
-          type="text"
-        />
-      </div>
-      <div className="p-field col-12 md:col-6">
+      <TextField
+        handleChange={handleChange}
+        name="timing"
+        label="timing"
+        value={formData.timing}
+      />
+
+      {/* <div className="p-field col-12 md:col-6">
         <label htmlFor="hallName">Hall Name</label>
         <InputText
           inputId="hallName"
@@ -88,8 +109,14 @@ function AddEventForm({ toggleDialog }) {
           value={formData.hallName}
           placeholder="Hall Name"
         />
-      </div>
-      <div className="p-field col-12 md:col-6">
+      </div> */}
+      <TextField
+        name="hallName"
+        value={formData.hallName}
+        handleChange={handleChange}
+        label="Hall Name"
+      />
+      {/* <div className="p-field col-12 md:col-6">
         <label htmlFor="venue">Venue</label>
         <InputText
           id="venue"
@@ -98,8 +125,14 @@ function AddEventForm({ toggleDialog }) {
           onChange={handleChange}
           value={formData.venue}
         />
-      </div>
-      <div className="p-field col-12 md:col-6">
+      </div> */}
+      <TextField
+        name="venue"
+        value={formData.venue}
+        handleChange={handleChange}
+        label="Venue"
+      />
+      {/* <div className="p-field col-12 md:col-6">
         <label htmlFor="description">Description</label>
         <InputText
           id="description"
@@ -107,7 +140,14 @@ function AddEventForm({ toggleDialog }) {
           value={formData.description}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
+      <TextField
+        name="description"
+        value={formData.description}
+        handleChange={handleChange}
+        label="Description"
+      />
+
       <div className="col-12 md:col-6 flex justify-content-end w-full">
         <Button
           label="cancel"

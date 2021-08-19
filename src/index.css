@@ -6,8 +6,8 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: "Gotham", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,7 +18,6 @@ code {
     monospace;
 }
 .p-sidebar {
-  background-color: #6338a1;
   color: white;
 }
 .purpleScheme {
@@ -40,7 +39,7 @@ code {
   box-shadow: 0 1px 5px rgba(11, 0, 1, 0.2);
 }
 .p-button-text {
-  flex: none;
+  flex: none !important;
 }
 .option {
   margin-top: 10px;
@@ -118,8 +117,8 @@ label {
 #daterangepicker {
   padding: 14px;
 }
-.btn {
-  width: 84px;
+.btn:focus {
+  background-color: #52328e !important;
 }
 .e-date-range-wrapper {
   border-width: 1px !important;
@@ -130,4 +129,22 @@ label {
 .e-date-range-wrapper::before {
   content: none !important;
   background: none !important;
+}
+.fullImage {
+  width: 60%;
+  height: 100%;
+}
+.fullImage > img {
+  width: 100%;
+  min-width: 300px;
+  height: 100%;
+  margin: 0 auto;
+}
+.smallRoundedImg {
+  width: 50px;
+  height: 50px;
+}
+.smallRoundedImg > img {
+  height: 100%;
+  border-radius: 50%;
 }

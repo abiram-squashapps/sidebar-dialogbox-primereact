@@ -1,12 +1,12 @@
 import React from "react";
 import { DataTable } from "primereact/datatable";
-import { customers } from "./customerData";
+import { events } from "../constant/customerData";
 import { Column } from "primereact/column";
 import placeholder from "../assets/images/petersmith.png";
 import { Button } from "primereact/button";
 
 function TablePrimeReact({ toggleDialog }) {
-  const customer = customers.data;
+  const eventsData = events.data;
 
   const statusBodyTemplate = (rowData) => (
     <span className={`pill ${rowData.status}`}>{rowData.status}</span>
@@ -15,18 +15,13 @@ function TablePrimeReact({ toggleDialog }) {
   const imageBodyTemplate = (rowData) => (
     <div className="p-grig">
       <img
-        className="p-col-2"
-        src={placeholder}
-        onError={(e) =>
-          (e.target.src =
-            "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-        }
-        alt={rowData.image}
-        className="product-image"
-        width="40px"
-        style={{ borderRadius: "50%" }}
+        className="p-col-2 product-image"
+        src={rowData.eventImage}
+        onError={(e) => (e.target.src = { placeholder })}
+        alt={rowData.eventImage}
+        width="100px"
+        height="60px"
       />
-      <span className="col-10">{rowData.name}</span>
     </div>
   );
 
@@ -37,31 +32,28 @@ function TablePrimeReact({ toggleDialog }) {
         <Button label="Add Event" onClick={toggleDialog} />
       </div>
       <DataTable
-        value={customer}
-        showGridlines
+        value={eventsData}
+        className="ml-2"
         stripedRows
         paginator
         rows={6}
-        removableSort
       >
-        <Column field="name" header="name" sortable></Column>
-        <Column field="company" header="company"></Column>
         <Column
-          field="country.name"
-          className="columns"
-          header="country"
-        ></Column>
-        <Column field="date" header="date" sortable></Column>
-        <Column
-          field="status"
-          body={statusBodyTemplate}
-          header="status"
-        ></Column>
-        <Column field="activity" header="activity" sortable></Column>
-        <Column
-          field="representative.name"
-          header="representative"
+          field="eventImage"
+          header="eventImage"
           body={imageBodyTemplate}
+        ></Column>
+        <Column field="eventName" header="Event Name"></Column>
+        <Column field="fromDate" header="fromDate"></Column>
+
+        <Column field="toDate" header="toDate"></Column>
+        <Column field="toDate" header="status"></Column>
+        <Column field="timing" header="timing"></Column>
+
+        <Column
+          field="venue.hallName"
+          className="columns "
+          header="Venue"
         ></Column>
       </DataTable>
     </div>

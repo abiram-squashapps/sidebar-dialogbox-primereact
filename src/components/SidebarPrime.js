@@ -7,8 +7,7 @@ function SidebarPrime({ sidebar, toggleSideBar }) {
       <Sidebar
         visible={sidebar}
         onHide={toggleSideBar}
-        className="purpleScheme"
-        style={{ backgroundColor: "#6338A1" }}
+        className="purpleScheme w-15rem bg-primary"
         modal={false}
       >
         <div className="flex flex-column purpleScheme">
@@ -16,26 +15,21 @@ function SidebarPrime({ sidebar, toggleSideBar }) {
             label="Events"
             icon=" pi pi-calendar"
             iconPos="left"
-            className="mb-4 block flex justify-content-start purpleSchema"
+            className="py-4 btn block flex justify-content-start"
           />
           <Button
             label="Education"
             icon=" pi pi-calendar"
             iconPos="left"
-            className="mb-4 block flex justify-content-start"
+            className="py-4 btn block flex justify-content-start"
           />
           <Button
             label="something"
             icon=" pi pi-user
             "
             iconPos="left"
-            className="mb-4 block flex justify-content-start"
+            className=" py-4 btn block flex justify-content-start"
           />
-          <Button className="amazon p-p-0 flex justify-content-start ">
-            <i className="pi pi-amazon p-px-2 mr-7"></i>
-            {"  "}
-            <span className="ml-4">Amazon</span>
-          </Button>
         </div>
       </Sidebar>
     </div>

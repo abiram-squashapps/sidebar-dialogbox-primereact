@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@syncfusion/ej2-react-calendars": "^19.2.55",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@wojtekmaj/react-daterange-picker": "^3.3.0",
     "primeflex": "^3.0.1",
     "primeicons": "^4.1.0",
     "primereact": "^6.5.0",

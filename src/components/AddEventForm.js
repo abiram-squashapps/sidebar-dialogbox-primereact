@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
+//import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import placeholder from "../assets/images/petersmith.png";
+import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
 
 function AddEventForm({ toggleDialog }) {
   const [formData, setFormData] = useState({
@@ -10,7 +11,13 @@ function AddEventForm({ toggleDialog }) {
     timing: "",
     venue: "",
     hallName: "",
+    description: "",
   });
+  const [date, endDate] = useState(["", ""]);
+  const handleDateRange = (date) => {
+    console.log(`start date ${date.value[0]}`);
+    console.log(`end date ${date.value[1]}`);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +59,12 @@ function AddEventForm({ toggleDialog }) {
 
       <div className="p-field  col-12 md:col-6">
         <label htmlFor="dateRange">Date Range</label>
-        <Dropdown id="dateRange" placeholder="select" optionLabel="name" />
+        <DateRangePickerComponent
+          onChange={handleDateRange}
+          startDate={date[0]}
+          endDate={date[1]}
+          id="daterangepicker"
+        />
       </div>
 
       <div className="p-field col-12 md:col-6">

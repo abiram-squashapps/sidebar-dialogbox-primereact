@@ -96,13 +96,38 @@ th input {
   width: 100%;
 }
 .imginput {
-  height: 170px;
-  margin-top: 10px;
-  border: 1px dashed gray;
+  margin: 10px 5px;
+
+  box-sizing: border-box;
 }
 .imginput > input {
   display: none;
 }
+.imginput > label {
+  width: 100%;
+  border: 1px dashed gray;
+  border-radius: 4px;
+  height: 170px;
+  margin: 10px auto;
+  margin-left: -5px;
+  display: flex;
+}
+label {
+  margin-bottom: 10px;
+}
+#daterangepicker {
+  padding: 14px;
+}
 .btn {
   width: 84px;
+}
+.e-date-range-wrapper {
+  border-width: 1px !important;
+  border: solid;
+  border-radius: 4px !important;
+}
+.e-date-range-wrapper::after,
+.e-date-range-wrapper::before {
+  content: none !important;
+  background: none !important;
 }

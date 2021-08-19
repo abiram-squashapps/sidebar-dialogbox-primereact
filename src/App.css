@@ -48,3 +48,15 @@
 .sidebarContainer {
   width: 20%;
 }
+.p-dialog-header {
+  padding: 1rem 1.5rem !important;
+}
+.p-dialog {
+  height: 90vh !important;
+}
+.p-dialog-content {
+  padding-bottom: 1rem !important;
+}
+.field {
+  margin-bottom: 0 !important;
+}

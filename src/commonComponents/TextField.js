@@ -3,7 +3,7 @@ import React from "react";
 
 function TextField({ handleChange, label, value, name }) {
   return (
-    <div className="p-field col-12 md:col-6">
+    <div className="field col-12 md:col-6">
       <label htmlFor="inputField">{label}</label>
       <InputText
         id="inputField"

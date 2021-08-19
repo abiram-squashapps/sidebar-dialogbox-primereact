@@ -59,43 +59,11 @@ code {
   margin-bottom: 50px;
 }
 
-.pill {
-  padding: 5px;
-  width: 100%;
-  display: block;
-  text-align: center;
-  font-weight: 500;
-  border-radius: 5px;
-}
-.unqualified {
-  background: rgb(255, 195, 195);
-
-  color: red;
-}
-.qualified {
-  background: rgb(137, 247, 135);
-  color: green;
-}
-.proposal {
-  background: rgb(243, 243, 146);
-}
-.new {
-  background: rgb(142, 142, 255);
-  color: white;
-}
-.renewal {
-  background: orange;
-  color: white;
-}
-.negotiation {
-  background: orchid;
-  color: white;
-}
 th input {
   width: 100%;
 }
 .imginput {
-  margin: 10px 5px;
+  margin: 0 5px;
 
   box-sizing: border-box;
 }
@@ -104,6 +72,10 @@ th input {
 }
 .imginput > label {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border: 1px dashed gray;
   border-radius: 4px;
   height: 170px;
@@ -111,8 +83,8 @@ th input {
   margin-left: -5px;
   display: flex;
 }
-label {
-  margin-bottom: 10px;
+.labelmargin {
+  margin-bottom: 10px !important;
 }
 #daterangepicker {
   padding: 14px;
@@ -141,10 +113,8 @@ label {
   margin: 0 auto;
 }
 .smallRoundedImg {
-  width: 50px;
-  height: 50px;
+  margin: 0 auto;
 }
 .smallRoundedImg > img {
-  height: 100%;
-  border-radius: 50%;
+  margin: 0 auto;
 }

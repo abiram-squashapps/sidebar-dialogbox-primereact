@@ -1,16 +1,17 @@
 import React from "react";
 import { DataTable } from "primereact/datatable";
-import { events } from "../constant/customerData";
 import { Column } from "primereact/column";
 import placeholder from "../assets/images/petersmith.png";
 import { Button } from "primereact/button";
+import { TableDataContext } from "../context/TableDataContextProvider";
+import { useContext } from "react";
 
 function TablePrimeReact({ toggleDialog }) {
-  const eventsData = events.data;
+  const { state } = useContext(TableDataContext);
 
-  const statusBodyTemplate = (rowData) => (
+  /* const statusBodyTemplate = (rowData) => (
     <span className={`pill ${rowData.status}`}>{rowData.status}</span>
-  );
+  ); */
 
   const imageBodyTemplate = (rowData) => (
     <div className="p-grig">
@@ -31,13 +32,7 @@ function TablePrimeReact({ toggleDialog }) {
         <h4>Events</h4>
         <Button label="Add Event" onClick={toggleDialog} />
       </div>
-      <DataTable
-        value={eventsData}
-        className="ml-2"
-        stripedRows
-        paginator
-        rows={6}
-      >
+      <DataTable value={state} className="ml-2" stripedRows paginator rows={6}>
         <Column
           field="eventImage"
           header="eventImage"
@@ -47,7 +42,7 @@ function TablePrimeReact({ toggleDialog }) {
         <Column field="fromDate" header="fromDate"></Column>
 
         <Column field="toDate" header="toDate"></Column>
-        <Column field="toDate" header="status"></Column>
+
         <Column field="timing" header="timing"></Column>
 
         <Column

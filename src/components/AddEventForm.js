@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-//import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import placeholder from "../assets/images/petersmith.png";
+import placeholder from "../assets/images/imagePlaceholder.png";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
 import TextField from "../commonComponents/TextField";
+import { useContext } from "react";
+import { TableDataContext } from "../context/TableDataContextProvider";
+//import ButtonComponent from "../commonComponents/ButtonComponent";
 
 function AddEventForm({ toggleDialog }) {
   const [formData, setFormData] = useState({
@@ -16,16 +18,17 @@ function AddEventForm({ toggleDialog }) {
   });
   const [imgUrl, setImgUrl] = useState("");
   const [date, setDate] = useState(["", ""]);
+  const { dispatch } = useContext(TableDataContext);
 
   const handleDateRange = (date) => {
-    console.log(`start date ${date.value[0]}`);
-    console.log(`end date ${date.value[1]}`);
-    setDate([...date.target.value]);
+    if (!date.value[0] || !date.value[1]) return;
+    setDate([date.value[0].toLocaleString(), date.value[1].toLocaleString()]);
   };
 
   const handleImageInput = (e) => {
     console.log(e.target.files[0]);
     if (e.target.files.length) {
+      console.log(URL.createObjectURL(e.target.files[0]));
       setImgUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
@@ -44,24 +47,28 @@ function AddEventForm({ toggleDialog }) {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(`img url-${imgUrl}`);
     let payLoad = {
-      id: "e1",
+      id: Math.random() * 1021 * Math.random + 1,
       eventName: formData.eventName,
       eventImage: imgUrl,
-      fromDate: date[0],
-      toDate: date[1],
+      fromDate: new Date(date[0]).toLocaleDateString(),
+      toDate: new Date(date[1]).toLocaleDateString(),
       timing: formData.timing,
       venue: {
         hallName: formData.hallName,
         venue: formData.venue,
       },
     };
+    dispatch({ type: "ADD_EVENT", payload: payLoad });
+    toggleDialog();
   };
 
   return (
     <div className="p-fluid p-formgrid grid ">
-      <div className="p-field col-12 imginput flex align-items-center justify-content-center">
+      <div className="field col-12 imginput ">
         <label
           htmlFor="address"
           onClick={removeImg}
@@ -83,13 +90,14 @@ function AddEventForm({ toggleDialog }) {
         label="Event Name"
       />
 
-      <div className="p-field  col-12 md:col-6">
+      <div className="field  col-12 md:col-6">
         <label htmlFor="dateRange">Date Range</label>
         <DateRangePickerComponent
           onChange={handleDateRange}
           startDate={date[0]}
           endDate={date[1]}
           id="daterangepicker"
+          placeholder="Select dates"
         />
       </div>
 
@@ -155,7 +163,8 @@ function AddEventForm({ toggleDialog }) {
           style={{ background: "#F0F3FF" }}
           onClick={toggleDialog}
         />
-        <Button label="submit" className="btn w-5rem" />
+        {/*  <ButtonComponent onClick={toggleDialog} bg="#f0f3ff" /> */}
+        <Button label="submit" className="btn w-5rem" onClick={handleSubmit} />
       </div>
     </div>
   );

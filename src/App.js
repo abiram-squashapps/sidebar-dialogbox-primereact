@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import TablePrimeReact from "./components/TablePrimeReact";
 import DialogBox from "./components/DialogBox";
+import TableDataContextProvider from "./context/TableDataContextProvider";
 
 function App() {
   const [sideBar, setSideBar] = useState(true);
@@ -17,14 +18,16 @@ function App() {
   };
   return (
     <div className="App">
-      <Navbar toggleSideBar={toggleSideBar} />
-      <DialogBox dialog={dialog} toggleDialog={toggleDialog} />
-      <div className="sidebarContainer">
-        <SidebarPrime sidebar={sideBar} toggleSideBar={toggleSideBar} />
-      </div>
-      <div className={sideBar ? "tableContainerSmall" : "tableContainerFull"}>
-        <TablePrimeReact toggleDialog={toggleDialog} />
-      </div>
+      <TableDataContextProvider>
+        <Navbar toggleSideBar={toggleSideBar} />
+        <DialogBox dialog={dialog} toggleDialog={toggleDialog} />
+        <div className="sidebarContainer">
+          <SidebarPrime sidebar={sideBar} toggleSideBar={toggleSideBar} />
+        </div>
+        <div className={sideBar ? "tableContainerSmall" : "tableContainerFull"}>
+          <TablePrimeReact toggleDialog={toggleDialog} />
+        </div>
+      </TableDataContextProvider>
     </div>
   );
 }

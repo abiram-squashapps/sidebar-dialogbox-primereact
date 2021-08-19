@@ -7,7 +7,7 @@ export const TableDataContext = createContext();
 
 const initialState = events.data;
 
-const DataTableReducer = (state = initialState, action) => {
+const DataTableReducer = (state, action) => {
   switch (action.type) {
     case "ADD_EVENT":
       return [...state, action.payload];
@@ -17,7 +17,7 @@ const DataTableReducer = (state = initialState, action) => {
 };
 
 function TableDataContextProvider({ children }) {
-  const [state, dispatch] = useReducer(DataTableReducer);
+  const [state, dispatch] = useReducer(DataTableReducer, initialState);
   return (
     <TableDataContext.Provider value={{ state, dispatch }}>
       {children}

@@ -1,6 +1,7 @@
 export const events = {
   data: [
     {
+      slNo: 1,
       id: "e1",
       eventName: "new event ahpening",
       eventImage:
@@ -15,6 +16,7 @@ export const events = {
       description: "first one",
     },
     {
+      slNo: 2,
       id: "e2",
       eventName: "new event ahpening",
       eventImage:

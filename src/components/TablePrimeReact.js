@@ -4,14 +4,14 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import options from "../assets/images/options.svg";
 import { TableDataContext } from "../context/TableDataContextProvider";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import {
   imageBodyTemplate,
   venueBodyTemplate,
 } from "./DatatableTemplates/tableTemplates";
 import { Card } from "primereact/card";
 
-function TablePrimeReact({ toggleDialog, setEditRowData }) {
+function TablePrimeReact({ toggleDialog }) {
   const { state, dispatch } = useContext(TableDataContext);
 
   const [showDropDown, setDropDown] = useState({ show: true, id: "" });
@@ -38,7 +38,13 @@ function TablePrimeReact({ toggleDialog, setEditRowData }) {
                     toggleDialog();
                   }}
                 />
-                <Button label="delete" className="w-full" />
+                <Button
+                  label="delete"
+                  className="w-full"
+                  onClick={(e) => {
+                    dispatch({ type: "DELETE", payload: rowData.id });
+                  }}
+                />
               </Card>
             </div>
           ) : null}
@@ -46,12 +52,6 @@ function TablePrimeReact({ toggleDialog, setEditRowData }) {
       </div>
     );
   };
-
-  useEffect(() => {
-    for (let i in state.tableData) {
-      state.tableData[i].slNo = parseInt(i) + 1;
-    }
-  }, [state]);
 
   return (
     <Card>

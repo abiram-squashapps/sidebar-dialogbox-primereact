@@ -2,6 +2,7 @@ import placeholder from "../../assets/images/petersmith.png";
 import options from "../../assets/images/options.svg";
 import "./tableTemplates.css";
 import { Card } from "primereact/card";
+import { Button } from "primereact/button";
 
 export const imageBodyTemplate = (rowData) => (
   <div className="p-grig">
@@ -23,21 +24,44 @@ export const venueBodyTemplate = (rowData) => (
   </div>
 );
 
-export const actionsBodyTemplate = (rowData) => {
-  let show = true;
+export const actionsBodyTemplate = (
+  rowData,
+  showDropDown,
+  setDropDown,
+  dispatch,
+  toggleDialog
+) => {
   return (
     <div
       onClick={(e) => {
-        show = false;
+        setDropDown((prev) => ({ show: !prev.show, id: rowData.id }));
       }}
+      className="menu"
     >
       <div className="menu">
         <img src={options} alt="o" />
-        {show && (
+        {showDropDown.show && showDropDown.id === rowData.id ? (
           <div>
-            <Card className="w-5rem dropdown ">hi</Card>
+            <Card className="w-7rem p-1 dropdown ">
+              <Button
+                label="edit"
+                className="w-full mb-1"
+                onClick={(e) => {
+                  console.log(rowData);
+                  dispatch({ type: "EDITING", payload: rowData });
+                  toggleDialog();
+                }}
+              />
+              <Button
+                label="delete"
+                className="w-full"
+                onClick={(e) => {
+                  dispatch({ type: "DELETE", payload: rowData.id });
+                }}
+              />
+            </Card>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

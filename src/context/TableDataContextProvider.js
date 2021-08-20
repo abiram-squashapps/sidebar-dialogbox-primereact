@@ -12,14 +12,21 @@ const DataTableReducer = (state, action) => {
     case "ADD_EVENT":
       return { ...state, tableData: [...state.tableData, action.payload] };
     case "EDIT_EVENT":
+      let foundIndex = state.tableData.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      let tableArr = [...state.tableData];
+      tableArr[foundIndex] = action.payload;
+
       return {
         ...state,
-        tableDate: state.tableData.map((item) => {
-          if (item.id === action.payload.id) {
-            return action.payload;
-          }
-          return item;
-        }),
+        tableData: tableArr,
+      };
+
+    case "DELETE":
+      return {
+        ...state,
+        tableData: state.tableData.filter((item) => item.id !== action.payload),
       };
     case "EDITING":
       return { ...state, editStatus: action.payload };

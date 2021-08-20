@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 function AddEventForm({ toggleDialog, rowData }) {
   const [isEditing, setIsEditing] = useState(false);
-  const { dispatch } = useContext(TableDataContext);
+  const { state, dispatch } = useContext(TableDataContext);
   const [imgUrl, setImgUrl] = useState("");
   const [date, setDate] = useState(["", ""]);
   const [formData, setFormData] = useState({
@@ -64,9 +64,8 @@ function AddEventForm({ toggleDialog, rowData }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`img url-${imgUrl}`);
     let payLoad = {
+      slNo: state.tableData.length + 1,
       id: uuid(),
       eventName: formData.eventName,
       eventImage: imgUrl,
@@ -79,10 +78,13 @@ function AddEventForm({ toggleDialog, rowData }) {
       },
       description: formData.description,
     };
-    if (isEditing) {
+    if (rowData) {
       dispatch({ type: "EDIT_EVENT", payload: { ...payLoad, id: rowData.id } });
+      dispatch({ type: "DONE_EDITING" });
+    } else {
+      dispatch({ type: "ADD_EVENT", payload: payLoad });
     }
-    dispatch({ type: "ADD_EVENT", payload: payLoad });
+
     toggleDialog();
   };
 
@@ -181,7 +183,10 @@ function AddEventForm({ toggleDialog, rowData }) {
           label="cancel"
           className="btn w-5rem mx-5 text-800"
           style={{ background: "#F0F3FF" }}
-          onClick={toggleDialog}
+          onClick={(e) => {
+            toggleDialog();
+            dispatch({ type: "DONE_EDITING" });
+          }}
         />
         {/*  <ButtonComponent onClick={toggleDialog} bg="#f0f3ff" /> */}
         <Button label="submit" className="btn w-5rem" onClick={handleSubmit} />

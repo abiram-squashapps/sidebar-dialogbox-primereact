@@ -28,10 +28,10 @@ function TablePrimeReact({ toggleDialog }) {
           <img src={options} alt="o" />
           {showDropDown.show && showDropDown.id === rowData.id ? (
             <div>
-              <Card className="w-7rem p-1 dropdown ">
+              <Card className="w-9rem p-1 dropdown ">
                 <Button
                   label="edit"
-                  className="w-full mb-1"
+                  className="w-full mb-1 addEventBtn"
                   onClick={(e) => {
                     console.log(rowData);
                     dispatch({ type: "EDITING", payload: rowData });
@@ -40,7 +40,7 @@ function TablePrimeReact({ toggleDialog }) {
                 />
                 <Button
                   label="delete"
-                  className="w-full"
+                  className="w-full addEventBtn"
                   onClick={(e) => {
                     dispatch({ type: "DELETE", payload: rowData.id });
                   }}
@@ -57,7 +57,11 @@ function TablePrimeReact({ toggleDialog }) {
     <Card>
       <div className="flex justify-content-between mb-1 align-items-center">
         <h4>Events</h4>
-        <Button label="Add Event" onClick={toggleDialog} />
+        <Button
+          label="Add Event"
+          onClick={toggleDialog}
+          className="addEventBtn"
+        />
       </div>
       <DataTable
         value={state.tableData}

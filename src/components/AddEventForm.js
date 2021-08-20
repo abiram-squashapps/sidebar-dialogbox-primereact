@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import uuid from "uuid/dist/v1";
 import { Button } from "primereact/button";
 import placeholder from "../assets/images/imagePlaceholder.png";
@@ -7,10 +7,12 @@ import TextField from "../commonComponents/TextField";
 import { useContext } from "react";
 import { TableDataContext } from "../context/TableDataContextProvider";
 import { useEffect } from "react";
+import { Toast } from "primereact/toast";
+
 //import ButtonComponent from "../commonComponents/ButtonComponent";
 
-function AddEventForm({ toggleDialog, rowData }) {
-  const [isEditing, setIsEditing] = useState(false);
+function AddEventForm({ toggleDialog, rowData, showSuccess }) {
+  const toast = useRef(null);
   const { state, dispatch } = useContext(TableDataContext);
   const [imgUrl, setImgUrl] = useState("");
   const [date, setDate] = useState(["", ""]);
@@ -21,6 +23,8 @@ function AddEventForm({ toggleDialog, rowData }) {
     hallName: "",
     description: "",
   });
+
+  //feed data into the form while editing
   useEffect(() => {
     if (rowData) {
       setFormData({
@@ -32,15 +36,15 @@ function AddEventForm({ toggleDialog, rowData }) {
       });
       setImgUrl(rowData.eventImage);
       setDate([new Date(rowData.fromDate), new Date(rowData.toDate)]);
-      setIsEditing(true);
     }
   }, [rowData]);
 
+  // for date range component which return an array of two dates
   const handleDateRange = (date) => {
     if (!date.value[0] || !date.value[1]) return;
     setDate([date.value[0].toLocaleString(), date.value[1].toLocaleString()]);
   };
-
+  // for image input , using URL.createobjectUrl to convert image into a url
   const handleImageInput = (e) => {
     console.log(e.target.files[0]);
     if (e.target.files.length) {
@@ -48,6 +52,7 @@ function AddEventForm({ toggleDialog, rowData }) {
       setImgUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
+  // to remove image on click
   const removeImg = () => {
     if (imgUrl) {
       setImgUrl("");
@@ -63,6 +68,7 @@ function AddEventForm({ toggleDialog, rowData }) {
     }));
   };
 
+  // submit handler for both edit and add events
   const handleSubmit = (e) => {
     let payLoad = {
       slNo: state.tableData.length + 1,
@@ -81,9 +87,11 @@ function AddEventForm({ toggleDialog, rowData }) {
     if (rowData) {
       dispatch({ type: "EDIT_EVENT", payload: { ...payLoad, id: rowData.id } });
       dispatch({ type: "DONE_EDITING" });
+      showSuccess();
     } else {
       dispatch({ type: "ADD_EVENT", payload: payLoad });
     }
+    showSuccess();
 
     toggleDialog();
   };
@@ -130,47 +138,20 @@ function AddEventForm({ toggleDialog, rowData }) {
         value={formData.timing}
       />
 
-      {/* <div className="p-field col-12 md:col-6">
-        <label htmlFor="hallName">Hall Name</label>
-        <InputText
-          inputId="hallName"
-          name="hallName"
-          onChange={handleChange}
-          value={formData.hallName}
-          placeholder="Hall Name"
-        />
-      </div> */}
       <TextField
         name="hallName"
         value={formData.hallName}
         handleChange={handleChange}
         label="Hall Name"
       />
-      {/* <div className="p-field col-12 md:col-6">
-        <label htmlFor="venue">Venue</label>
-        <InputText
-          id="venue"
-          type="text"
-          name="venue"
-          onChange={handleChange}
-          value={formData.venue}
-        />
-      </div> */}
+
       <TextField
         name="venue"
         value={formData.venue}
         handleChange={handleChange}
         label="Venue"
       />
-      {/* <div className="p-field col-12 md:col-6">
-        <label htmlFor="description">Description</label>
-        <InputText
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-      </div> */}
+
       <TextField
         name="description"
         value={formData.description}
@@ -181,15 +162,20 @@ function AddEventForm({ toggleDialog, rowData }) {
       <div className="col-12 md:col-6 flex justify-content-end w-full">
         <Button
           label="cancel"
-          className="btn w-5rem mx-5 text-800"
+          className="btn  mx-3 text-800 addEventBtn"
           style={{ background: "#F0F3FF" }}
           onClick={(e) => {
             toggleDialog();
+            showSuccess();
             dispatch({ type: "DONE_EDITING" });
           }}
         />
         {/*  <ButtonComponent onClick={toggleDialog} bg="#f0f3ff" /> */}
-        <Button label="submit" className="btn w-5rem" onClick={handleSubmit} />
+        <Button
+          label={rowData ? "update" : "submit"}
+          className="btn  addEventBtn"
+          onClick={handleSubmit}
+        />
       </div>
     </div>
   );

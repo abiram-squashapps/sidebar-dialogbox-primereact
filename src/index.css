@@ -118,3 +118,6 @@ th input {
 .smallRoundedImg > img {
   margin: 0 auto;
 }
+.addEventBtn {
+  width: 106px !important;
+}

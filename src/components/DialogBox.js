@@ -3,7 +3,7 @@ import { Dialog } from "primereact/dialog";
 import AddEventForm from "./AddEventForm";
 import { useContext } from "react";
 import { TableDataContext } from "../context/TableDataContextProvider";
-function DialogBox({ dialog, toggleDialog }) {
+function DialogBox({ dialog, toggleDialog, showSuccess }) {
   const { state, dispatch } = useContext(TableDataContext);
   return (
     <div>
@@ -18,7 +18,11 @@ function DialogBox({ dialog, toggleDialog }) {
         style={{ width: "50vw" }}
         header={state.editStatus ? "edit event" : "Add Events"}
       >
-        <AddEventForm toggleDialog={toggleDialog} rowData={state.editStatus} />
+        <AddEventForm
+          toggleDialog={toggleDialog}
+          rowData={state.editStatus}
+          showSuccess={showSuccess}
+        />
       </Dialog>
     </div>
   );

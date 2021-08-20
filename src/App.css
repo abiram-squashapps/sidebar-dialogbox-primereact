@@ -35,18 +35,22 @@
 .App-link {
   color: #61dafb;
 }
+.mainContainer {
+  display: flex;
+}
 .tableContainerSmall {
-  width: 78%;
-  float: right;
-  margin-right: 0.5%;
-  margin-top: 1%;
+  width: 80%;
+  margin: 1% auto;
 }
 .tableContainerFull {
   width: 98%;
   margin: 1%;
 }
 .sidebarContainer {
-  width: 20%;
+  width: 15%;
+}
+.sidebarContainer-hide {
+  width: 0%;
 }
 .p-dialog-header {
   padding: 1rem 1.5rem !important;

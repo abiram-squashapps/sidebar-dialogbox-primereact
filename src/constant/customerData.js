@@ -12,6 +12,7 @@ export const events = {
         hallName: "cag pride",
         venue: "squashapps",
       },
+      description: "first one",
     },
     {
       id: "e2",
@@ -25,6 +26,7 @@ export const events = {
         hallName: "cag pride",
         venue: "squashapps",
       },
+      description: "second one",
     },
   ],
 };

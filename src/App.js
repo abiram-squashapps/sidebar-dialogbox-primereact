@@ -20,12 +20,18 @@ function App() {
     <div className="App">
       <TableDataContextProvider>
         <Navbar toggleSideBar={toggleSideBar} />
-        <DialogBox dialog={dialog} toggleDialog={toggleDialog} />
-        <div className="sidebarContainer">
-          <SidebarPrime sidebar={sideBar} toggleSideBar={toggleSideBar} />
-        </div>
-        <div className={sideBar ? "tableContainerSmall" : "tableContainerFull"}>
-          <TablePrimeReact toggleDialog={toggleDialog} />
+        {dialog && <DialogBox dialog={dialog} toggleDialog={toggleDialog} />}
+        <div className="mainContainer">
+          <div
+            className={sideBar ? "sidebarContainer" : "sidebarContainer-hide"}
+          >
+            <SidebarPrime sidebar={sideBar} toggleSideBar={toggleSideBar} />
+          </div>
+          <div
+            className={sideBar ? "tableContainerSmall" : "tableContainerFull"}
+          >
+            <TablePrimeReact toggleDialog={toggleDialog} />
+          </div>
         </div>
       </TableDataContextProvider>
     </div>

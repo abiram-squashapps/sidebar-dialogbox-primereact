@@ -5,12 +5,26 @@ import { events } from "../constant/customerData";
 
 export const TableDataContext = createContext();
 
-const initialState = events.data;
+const initialState = { tableData: events.data, editStatus: "" };
 
 const DataTableReducer = (state, action) => {
   switch (action.type) {
     case "ADD_EVENT":
-      return [...state, action.payload];
+      return { ...state, tableData: [...state.tableData, action.payload] };
+    case "EDIT_EVENT":
+      return {
+        ...state,
+        tableDate: state.tableData.map((item) => {
+          if (item.id === action.payload.id) {
+            return action.payload;
+          }
+          return item;
+        }),
+      };
+    case "EDITING":
+      return { ...state, editStatus: action.payload };
+    case "DONE_EDITING":
+      return { ...state, editStatus: "" };
     default:
       return state;
   }

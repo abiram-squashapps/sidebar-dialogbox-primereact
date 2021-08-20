@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-
+import uuid from "uuid/dist/v1";
 import { Button } from "primereact/button";
 import placeholder from "../assets/images/imagePlaceholder.png";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
 import TextField from "../commonComponents/TextField";
 import { useContext } from "react";
 import { TableDataContext } from "../context/TableDataContextProvider";
+import { useEffect } from "react";
 //import ButtonComponent from "../commonComponents/ButtonComponent";
 
-function AddEventForm({ toggleDialog }) {
+function AddEventForm({ toggleDialog, rowData }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const { dispatch } = useContext(TableDataContext);
+  const [imgUrl, setImgUrl] = useState("");
+  const [date, setDate] = useState(["", ""]);
   const [formData, setFormData] = useState({
     eventName: "",
     timing: "",
@@ -16,9 +21,20 @@ function AddEventForm({ toggleDialog }) {
     hallName: "",
     description: "",
   });
-  const [imgUrl, setImgUrl] = useState("");
-  const [date, setDate] = useState(["", ""]);
-  const { dispatch } = useContext(TableDataContext);
+  useEffect(() => {
+    if (rowData) {
+      setFormData({
+        eventName: rowData.eventName,
+        timing: rowData.timing,
+        venue: rowData.venue.venue,
+        hallName: rowData.venue.hallName,
+        description: rowData.description,
+      });
+      setImgUrl(rowData.eventImage);
+      setDate([new Date(rowData.fromDate), new Date(rowData.toDate)]);
+      setIsEditing(true);
+    }
+  }, [rowData]);
 
   const handleDateRange = (date) => {
     if (!date.value[0] || !date.value[1]) return;
@@ -51,7 +67,7 @@ function AddEventForm({ toggleDialog }) {
     e.preventDefault();
     console.log(`img url-${imgUrl}`);
     let payLoad = {
-      id: Math.random() * 1021 * Math.random + 1,
+      id: uuid(),
       eventName: formData.eventName,
       eventImage: imgUrl,
       fromDate: new Date(date[0]).toLocaleDateString(),
@@ -61,7 +77,11 @@ function AddEventForm({ toggleDialog }) {
         hallName: formData.hallName,
         venue: formData.venue,
       },
+      description: formData.description,
     };
+    if (isEditing) {
+      dispatch({ type: "EDIT_EVENT", payload: { ...payLoad, id: rowData.id } });
+    }
     dispatch({ type: "ADD_EVENT", payload: payLoad });
     toggleDialog();
   };
